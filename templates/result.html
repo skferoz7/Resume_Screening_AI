@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume Match Result</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            width: 420px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .progress {
+            background: #e0e0e0;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 22px;
+            margin: 15px 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;                 /* IMPORTANT */
+            background: #198754;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 20px;
+            transition: width 0.6s ease;
+        }
+
+        .section {
+            margin-top: 15px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .missing {
+            color: #dc3545;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #0d6efd;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Resume Match Result</h2>
+
+    <p><b>Match Percentage:</b> {{ score }}%</p>
+
+    <div class="progress">
+        <div class="progress-bar" id="progressBar" data-score="{{ score }}">
+            {{ score }}%
+        </div>
+    </div>
+
+    <div class="section">
+        <b>Matched Skills:</b>
+        <ul>
+            {% for skill in skills %}
+                <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="section missing">
+        <b>Missing Skills:</b>
+        <ul>
+            {% for skill in missing %}
+                <li>{{ skill }}</li>
+            {% else %}
+                <li>No missing skills 🎉</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <a href="/">Analyze Another Resume</a>
+</div>
+
+<!-- ✅ SCRIPT MUST BE HERE (BOTTOM) -->
+<script>
+    const bar = document.getElementById("progressBar");
+
+    let score = parseFloat(bar.dataset.score);
+    score = Math.max(0, Math.min(100, score));
+
+    bar.style.width = Math.round(score) + "%";
+    bar.textContent = score.toFixed(2) + "%";
+
+    if (score < 40) {
+        bar.style.background = "#dc3545"; // red
+    } else if (score < 70) {
+        bar.style.background = "#ffc107"; // yellow
+    } else {
+        bar.style.background = "#198754"; // green
+    }
+</script>
+
+</body>
+</html>
