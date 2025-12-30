@@ -85,38 +85,39 @@
         </div>
     </div>
 
+    <!-- MATCHED SKILLS -->
     <div class="section">
         <b>Matched Skills:</b>
-        <ul>
-            {% for skill in skills %}
-                <li>{{ skill }}</li>
-            {% endfor %}
-        </ul>
+
+        {% if skills %}
+            <ul>
+                {% for skill in skills %}
+                    <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No matched skills</p>
+        {% endif %}
     </div>
 
-    <div class="section missing">
-        <b>Missing Skills:</b>
-        <ul>
-            {% for skill in missing %}
-                <li>{{ skill }}</li>
-            {% else %}
-                <li>No missing skills 🎉</li>
-            {% endfor %}
-        </ul>
-    </div>
+    
 
     <a href="/">Analyze Another Resume</a>
 </div>
+
 
 <!-- ✅ SCRIPT MUST BE HERE (BOTTOM) -->
 <script>
     const bar = document.getElementById("progressBar");
 
-    let score = parseFloat(bar.dataset.score);
+    let score = parseFloat(bar.dataset.score || 0);
     score = Math.max(0, Math.min(100, score));
 
-    bar.style.width = Math.round(score) + "%";
     bar.textContent = score.toFixed(2) + "%";
+
+    setTimeout(() => {
+        bar.style.width = Math.round(score) + "%";
+    }, 100);
 
     if (score < 40) {
         bar.style.background = "#dc3545"; // red
@@ -126,6 +127,7 @@
         bar.style.background = "#198754"; // green
     }
 </script>
+
 
 </body>
 </html>
