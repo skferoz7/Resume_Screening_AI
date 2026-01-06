@@ -1,6 +1,5 @@
-
 flask
+gunicorn
 scikit-learn
-nltk
-PyPDF2
-python-docx
+numpy
+pandas
