@@ -63,7 +63,5 @@ def analyze():
         skills=skills,
         missing=missing
     )
-
-
 if __name__ == "__main__":
     app.run()
